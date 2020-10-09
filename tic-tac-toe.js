@@ -33,10 +33,25 @@ clickOperation = (squareID) => {
     } 
 } 
 
+}
 
-
-
-
-
-
+gamePlay = (squareID) => {
+    
+    if(stateOfLetter == "O"){    
+        document.getElementById(squareID).classList.add(stateOfLetter);
+        document.getElementById(squareID).innerHTML = stateOfLetter;
+        stateOfLetter = "X"; 
+        clickOperation(squareID); 
+        if(clickCount > 2){ 
+            winnerCheck(); 
+        }
+    } else {
+        document.getElementById(squareID).classList.add(stateOfLetter);
+        document.getElementById(squareID).innerHTML = stateOfLetter;
+        stateOfLetter = "O";
+        clickOperation(squareID);
+        if(clickCount > 2){
+           winnerCheck();
+        }
+    }
 }
