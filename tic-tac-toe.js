@@ -1,6 +1,6 @@
 let clickCounter = 0;
 let stateOfLetter = "X";      
-let stateOfGame = [];        
+let stateOfGame = [];        //
          
 window.onload = () => {
     
@@ -26,12 +26,23 @@ mouseOperations = (square) => {
         clickCounter += 1;
         gamePlay(square.id);  
     }
+    square.onmouseover = function(){
+        square.classList.add("hover");
+    }
+
+    square.onmouseleave = function(){
+        square.classList.remove("hover");
+    }
+
+    newGameButton.onclick = function(){
+        RunNewGame();
+    }
     
+} 
 clickOperation = (squareID) => {
     document.getElementById(squareID).onclick = function(){
         console.log("Disabled!");
     } 
-} 
 
 }
 
