@@ -1,68 +1,173 @@
-let clickCounter = 0;
-let stateOfLetter = "X";      
-let stateOfGame = [];        //
-         
-window.onload = () => {
-    
-    let mainBoard = document.getElementById("board");  
-    let divsOps = mainBoard.querySelectorAll("div"); 
-  
-    for (x = 1; x < divsOps.length + 1; x++){
-        let square = divsOps[x-1];
-        square.classList.add("square");
-        square.id = x;  
-        mouseOperations(square); 
+
+let state = []
+let count = 0;
+window.onload=()=>{
+    start();
+}
+
+start=()=>{
+    let divs = document.getElementById("board").children;
+    for(i=0;i<divs.length;i++){
+        divs[i].className="square";
+        mouseMovements(divs[i],i);
+
     }
 }
 
-
-mouseOperations = (square) => {
-    
-    let newGameButton = document.getElementsByClassName("btn")[0]; 
-
-    
-    square.onclick = function(){
-        stateOfGame[square.id - 1] = stateOfLetter; 
-        clickCounter += 1;
-        gamePlay(square.id);  
-    }
-    square.onmouseover = function(){
-        square.classList.add("hover");
-    }
-
-    square.onmouseleave = function(){
-        square.classList.remove("hover");
-    }
-
-    newGameButton.onclick = function(){
-        RunNewGame();
+mouseMovements =(piece,id)=>{
+    piece.onmouseover = function(){
+        piece.classList.add("hover");
     }
     
-} 
-clickOperation = (squareID) => {
-    document.getElementById(squareID).onclick = function(){
-        console.log("Disabled!");
+    piece.onmouseleave = function(){
+        piece.classList.remove("hover");
     } 
 
+    piece.onclick = function(){
+        clicking(piece,id);
+        checkForWinners();
+    }
+
+    newgame();
 }
 
-gamePlay = (squareID) => {
-    
-    if(stateOfLetter == "O"){    
-        document.getElementById(squareID).classList.add(stateOfLetter);
-        document.getElementById(squareID).innerHTML = stateOfLetter;
-        stateOfLetter = "X"; 
-        clickOperation(squareID); 
-        if(clickCount > 2){ 
-            winnerCheck(); 
-        }
-    } else {
-        document.getElementById(squareID).classList.add(stateOfLetter);
-        document.getElementById(squareID).innerHTML = stateOfLetter;
-        stateOfLetter = "O";
-        clickOperation(squareID);
-        if(clickCount > 2){
-           winnerCheck();
+
+newgame = () =>{
+    let divs = document.getElementById("board").children;
+    let btn = document.getElementsByClassName("btn")[0];
+    btn.onclick = function(){
+        for(j=0;j<divs.length;j++){
+            divs[j].innerHTML="";
         }
     }
 }
+
+
+clicking = (piece,index) =>{
+    if(state == []){
+        piece.innerHTML ="X";
+        piece.classList.add("X");
+        state[index]="X";
+        count = count +1;
+    }
+    if(count % 2 != 0 && count > 0){
+        piece.innerHTML ="O";
+        piece.classList.add("O");
+        state[index]="O";
+        count = count +1;
+    }
+    else{
+        piece.innerHTML ="X";
+        piece.classList.add("X");
+        state[index]="X";
+        count = count +1;
+    }
+
+    cheaters(piece)
+    checkForWinners();
+    
+}
+
+cheaters =(piece) =>{
+    piece.onclick = function(){};
+}
+
+// winner check
+
+checkForWinners =() => {
+
+        if(state[0]== "X" && state[1]== "X" && state[2] == "X"){
+            var message = document.getElementById("status");           
+            message.innerHTML = "Congratulations! X is the Winner!";
+            message.className = "you-won";
+        
+        }
+        else if(state[3]== "X" && state[4]== "X" && state[5] == "X"){
+            var message = document.getElementById("status");
+            message.innerHTML = "Congratulations! X is the Winner!";
+            message.className = "you-won";
+        }
+
+        else if(state[6]== "X" && state[7]== "X" && state[8] == "X"){
+            var message = document.getElementById("status");
+            message.innerHTML = "Congratulations! X is the Winner!";
+            message.className = "you-won";
+        }
+        else if(state[0]== "X" && state[3]== "X" && state[6] == "X"){
+            var message = document.getElementById("status");
+            message.innerHTML = "Congratulations! X is the Winner!";
+            message.className = "you-won";
+        }
+        else if(state[1]== "X" && state[4]== "X" && state[7] == "X"){
+            var message = document.getElementById("status");
+            message.innerHTML = "Congratulations! X is the Winner!";
+            message.className = "you-won";
+        }
+        else if(state[2]== "X" && state[5]== "X" && state[8] == "X"){
+            var message = document.getElementById("status");
+            message.innerHTML = "Congratulations! X is the Winner!";
+            message.className = "you-won";
+        }
+        else if(state[2]== "X" && state[4]== "X" && state[6] == "X"){
+            var message = document.getElementById("status");
+            message.innerHTML = "Congratulations! X is the Winner!";
+            message.className = "you-won";
+        }
+        else if(state[0]== "X" && state[4]== "X" && state[8] == "X"){
+            var message = document.getElementById("status");
+            message.innerHTML = "Congratulations! X is the Winner!";
+            message.className = "you-won";
+        }
+    
+      
+      if(state[0]== "O" && state[1]== "O" && state[2] == "O"){
+        var message = document.getElementById("status");
+        message.innerHTML = "Congratulations! O is the Winner!";
+        message.className = "you-won";
+        
+      }
+      else if(state[3]== "O" && state[4]== "O" && state[5] == "O"){
+        var message = document.getElementById("status");
+        message.innerHTML = "Congratulations! O is the Winner!";
+        message.className = "you-won";
+        
+       }
+       else if(state[6]== "O" && state[7]== "O" && state[8] == "O"){
+        var message = document.getElementById("status");
+        message.innerHTML = "Congratulations! O is the Winner!";
+        message.className = "you-won";
+        
+       }
+       else if(state[0]== "O" && state[3]== "O" && state[6] == "O"){
+        var message = document.getElementById("status");
+        message.innerHTML = "Congratulations! O is the Winner!";
+        message.className = "you-won";
+        ;
+      }
+      else if(state[1]== "O" && state[4]== "O" && state[7] == "O"){
+        var message = document.getElementById("status");
+        message.innerHTML = "Congratulations! O is the Winner!";
+        message.className = "you-won";
+        
+       }
+      else if(state[2]== "O" && state[5]== "O" && state[8] == "O"){
+        var message = document.getElementById("status");
+        message.innerHTML = "Congratulations! O is the Winner!";
+        message.className = "you-won";
+        
+       }
+      else if(state[2]== "O" && state[4]== "O" && state[6] == "O"){
+        var message = document.getElementById("status");
+        message.innerHTML = "Congratulations! O is the Winner!";
+        message.className = "you-won";
+        
+       }
+       else if(state[0]== "O" && state[4]== "O" && state[8] == "O"){
+        var message = document.getElementById("status");
+        message.innerHTML = "Congratulations! O is the Winner!";
+        message.className = "you-won";
+        
+       }
+
+}
+
